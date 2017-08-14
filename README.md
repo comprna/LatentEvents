@@ -186,8 +186,8 @@ GTEX-13O3Q-0526-SM-5KM18	Lung
 ### Output file
 A structure histogram plot by the name **&lt;output-plot&gt;**, grouping all samples by labels. Samples in each batch will have been sorted by the proportional membership of the most representative cluster in that batch.
 
-![StructurePlot.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/SampleClusterDistrib_plot.pdf)
-**Fig.3** - Structure plot of GTEX data. 503 samples : 110 from liver, 288 from lung, 105 from brain. Run for 150 max iterations, 3 clusters, all events, expression filter of 1, no feature selection.
+![StructurePlot.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/SampleClusterDistrib_plot.jpg)
+**Fig.3** - Structure plot of GTEX data. 503 samples : 110 from liver, 288 from lung, 105 from brain. *LatentEvents_LDA.py* run for 150 max iterations, 3 clusters, all events, expression filter of 1, no feature selection.
 
 ## Cluster-event comparison - TopicTerm_Comparison.R
 ----------------------------
