@@ -19,16 +19,13 @@ To adapt LDA to our needs :
 
 This vocabulary has been used interchangeably throughout the code.
 
-```
-Figure 1
-```
+
+![Figure1.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/Matrices.jpg)
 **Fig.1** - Latent Dirichlet Allocation (LDA) input and output matrices.
 
 Figure 2 shows with more clarity the relations between the distributions and the different words of vocabulary. Each sample will have a cluster distribution and each cluster will have an event distribution.
 
-```
-Figure 2
-```
+![Figure2.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/Distributions.jpg)
 **Fig.2** - Intuitions on Latent Dirichlet Allocation. In this imaginary example we have two samples, three clusters and seven events, the possible distributions we could obtain, and how they all connect together.
 
 These tools are ready to use, they can be used directly after download.
@@ -188,9 +185,9 @@ GTEX-13O3Q-0526-SM-5KM18	Lung
 
 ### Output file
 A structure histogram plot by the name **&lt;output-plot&gt;**, grouping all samples by labels. Samples in each batch will have been sorted by the proportional membership of the most representative cluster in that batch.
-```
-An example of structure plot
-```
+
+![StructurePlot.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/SampleClusterDistrib_plot.pdf)
+**Fig.3** - Structure plot of GTEX data. 503 samples : 110 from liver, 288 from lung, 105 from brain. Run for 150 max iterations, 3 clusters, all events, expression filter of 1, no feature selection.
 
 ## Cluster-event comparison - TopicTerm_Comparison.R
 ----------------------------
