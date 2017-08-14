@@ -224,7 +224,7 @@ Rscript --vanilla TopicTerm_Comparison.R -i Example.TopicTerm.tab -o Specificity
 Outputs by the name **&lt;output-name&gt;**\_cl **&lt;cluster-number&gt;** .pdf. The cluster number will be automatically generated, only the output name without extension can be given. Each file will have a specificity-probability plot. 
 
 The specificity is the log2 ratio of the probability of the cluster against the other clusters (there will be a curve for each of the other clusters), for the events in decreasing order of probability of the cluster.
-There will therefore be as many outputs as clusters (topics).
-```
-Example of output plot
-```
+There will therefore be as many outputs as clusters (topics). You will find in **figure 4** an example of a plot for one of three clusters ; similarly the output will give one of these plots for each of the other two clusters.
+
+![SpecificityProbabilityPlot.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/SpecificityProbability_cl2.jpg)
+**Fig.4** - Cluster 2 specificity-probability plot for GTEX data. Clusters of GTEX data for heart, colon and pancreas, run for 3 clusters, 24012 events kept after filtering. On this plot the most probable events from cluster 2 seem to be specific to the cluster.
