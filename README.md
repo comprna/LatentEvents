@@ -40,10 +40,10 @@ Developed on Python 3.4
 ### Modules used
 - scikit-learn version 0.18.2 (0.18 minimum required)
 - NumPy version 1.12.1
-- needs SUPPA's tools.py (directory lib/)
+- uses SUPPA's tools.py (directory lib/)
 
 ### Description 
-This tool calculates PSIs for a given ioe and transcript expression files and clusters the filtered alternative splicing events with a Latent Dirichlet Allocation model. Events can be filtered for a given event type, to keep micro exons only and/or with a given minimal expression.
+This tool calculates PSIs like SUPPA for a given ioe and transcript expression files and clusters the filtered alternative splicing events with a Latent Dirichlet Allocation model. Events can be filtered for a given event type, to keep micro exons only and/or with a given minimal expression.
 
 ### Command
 ```
