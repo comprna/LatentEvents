@@ -9,7 +9,7 @@ Here we explain how these tools work.
 
 Latent Dirichlet Allocation is a generative statistical model (belonging to probabilistic topic models) usually used on text corpora to find a series of topics. We will be applying this principle to find clusters for a series of samples, mostly from biological data. A great aspect of LDA is that it can allow each sample to belong to multiple clusters, with a probability associated to each of the clusters.
 
-In our code we are using the scikit-learn's implementation of Latent Dirichlet Allocation. From a document-term counts matrix and a series of parameters (number of topics, etc), this function can give us a document-topic distribution and a topic-term distribution (Fig.1).
+In our code we are using the scikit-learn's implementation of Latent Dirichlet Allocation. From a document-term counts matrix and a series of parameters (number of topics, etc), this function can give us a document-topic distribution and a topic-term distribution (**Fig.1**).
 
 To adapt LDA to our needs :
 - **Counts** have become **PSI measures**
@@ -23,7 +23,7 @@ This vocabulary has been used interchangeably throughout the code.
 ![Figure1.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/Matrices.jpg)
 **Fig.1** - Latent Dirichlet Allocation (LDA) input and output matrices.
 
-Figure 2 shows with more clarity the relations between the distributions and the different words of vocabulary. Each sample will have a cluster distribution and each cluster will have an event distribution.
+**Figure 2** shows with more clarity the relations between the distributions and the different words of vocabulary. Each sample will have a cluster distribution and each cluster will have an event distribution.
 
 ![Figure2.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/Distributions.jpg)
 **Fig.2** - Intuitions on Latent Dirichlet Allocation. In this imaginary example we have two samples, three clusters and seven events, the possible distributions we could obtain, and how they all connect together.
@@ -74,7 +74,7 @@ python LatentEvents_LDA.py -i <ioe-file> -e <expression-file> -o <output-name-fo
 - **-mi** | **--microexon-enrichment**: if option written in command, events will be filtered to keep only micro exons (<= 50 nt). Default = False.
 - **-m** | **--mode**: verbose mode to choose from DEBUG, INFO, WARNING, ERROR and CRITICAL.
 
-**Feature selection** : for a given number of iterations, the last events in terms of probability for each cluster will be checked (number given by arguments). If some events are in common in all clusters, they will be removed. In figure 2, if we check the 3 least probable events for each cluster in the cluster-event distributions, event 4 is in common for all clusters and will be removed before recalculating the distributions.
+**Feature selection** : for a given number of iterations, the last events in terms of probability for each cluster will be checked (number given by arguments). If some events are in common in all clusters, they will be removed. In **figure 2**, if we check the 3 least probable events for each cluster in the cluster-event distributions, event 4 is in common for all clusters and will be removed before recalculating the distributions.
 
 
 ### Input files
@@ -186,7 +186,7 @@ GTEX-13O3Q-0526-SM-5KM18	Lung
 ```
 
 ### Output file
-A structure histogram plot by the name **&lt;output-plot&gt;**, grouping all samples by labels. Samples in each batch will have been sorted by the proportional membership of the most representative cluster in that batch.
+A structure histogram plot by the name **&lt;output-plot&gt;**, grouping all samples by labels (eg **Fig.3**). Samples of each label will have been sorted by the proportional membership of the most representative cluster for that label.
 
 ![StructurePlot.jpg](https://github.com/comprna/LatentEvents/blob/master/Figures/SampleClusterDistrib_plot.jpg)
 **Fig.3** - Structure plot of GTEX data. 503 samples : 110 from liver, 288 from lung, 105 from brain. *LatentEvents_LDA.py* run for 150 max iterations, 3 clusters, all events, expression filter of 1, no feature selection.
