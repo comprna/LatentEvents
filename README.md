@@ -7,7 +7,7 @@ Here we explain how these tools work.
 ## Overview
 ----------------------------
 
-Latent Dirichlet Allocation is a generative statistical model (probabilistic topic model) usually used on text corpora to find a series of topics. We will be applying this principle to find clusters for a series of samples (mostly from biological data). A great aspect of LDA is that it can allow each sample to belong to multiple clusters, with a probability associated to each of the clusters.
+Latent Dirichlet Allocation is a generative statistical model (belonging to probabilistic topic models) usually used on text corpora to find a series of topics. We will be applying this principle to find clusters for a series of samples, mostly from biological data. A great aspect of LDA is that it can allow each sample to belong to multiple clusters, with a probability associated to each of the clusters.
 
 In our code we are using the scikit-learn's implementation of Latent Dirichlet Allocation. From a document-term counts matrix and a series of parameters (number of topics, etc), this function can give us a document-topic distribution and a topic-term distribution (Fig.1).
 
@@ -44,7 +44,7 @@ Developed on Python 3.4
 - NumPy version 1.12.1
 
 ### Description 
-This tool calculates PSIs for a given ioe and transcript expression files and clusters the filtered alternative splicing events with a Latent Dirichlet Allocation model. Events can be filtered for a given event type, to keep micro exons only or with a given minimal expression.
+This tool calculates PSIs for a given ioe and transcript expression files and clusters the filtered alternative splicing events with a Latent Dirichlet Allocation model. Events can be filtered for a given event type, to keep micro exons only and/or with a given minimal expression.
 
 ### Command
 ```
@@ -57,25 +57,25 @@ python LatentEvents_LDA.py -i <ioe-file> -e <expression-file> -o <output-name-fo
 
 ### Command options
 
-- **-h** | **--help**: display the help message describing the different parameters
-- **-i** | **--ioe-file**: input file with the definition of the events and corresponding transcripts.
-- **-e** | **--expression-file**: transcript expression file containing the abundances of all transcripts
-- **-o** | **--output-file**: Common name for all outputs (later distinguished by extensions: &lt;output-file&gt;.DocTopic.tab, &lt;output-file&gt;.TopicTerm.tab, &lt;output-file&gt;.top&lt;number&gt;Events.txt). **Note**: No extension must be given.
+- **-h** | **--help**: Display the help message describing the different parameters.
+- **-i** | **--ioe-file**: Input file with the definition of the events and corresponding transcripts.
+- **-e** | **--expression-file**: Transcript expression file containing the abundances of all transcripts.
+- **-o** | **--output-file**: Common name for all outputs (later distinguished by extensions: **&lt;output-file&gt;**.DocTopic.tab, **&lt;output-file&gt;**.TopicTerm.tab, **&lt;output-file&gt;**.top **&lt;number&gt;** Events.txt). **Note**: No extension must be given.
 - **-N** : Factor that will be multiplied by PSIs to transform them into counts. Default = 1000.
 - **-l** | **--four-lda-params**:  Latent Dirichlet Allocation parameters. **MIND THE ORDER**:
-    - Number of topics/clusters (sklearn LatentDirichletAllocation function)
-    - Number of maximum iterations (sklearn LatentDirichletAllocation function)
+    - Number of topics/clusters (sklearn's *LatentDirichletAllocation* function)
+    - Number of maximum iterations (sklearn's *LatentDirichletAllocation* function)
     - Number of iterations of feature selection (put to 0 if none wanted)
     - Number of least probable features (events) to check in each iteration of feature selection : this number of events with the worst probabilities will be be checked, if in common between clusters, they will be removed.
-- **-t** | **--n-top-events**: Number of most probable events of every cluster to show in output file
+- **-t** | **--n-top-events**: Number of most probable events of every cluster to show in output file.
 - **-p** | **--cutoff-prob**: Cumulated probability cutoff, so as to find the number of events needed to overcome this cutoff (total number of main events). Default = 0.8.
-- **-r** | **--no-random-matrices**: Number of random matrices to create when evaluating clusters
+- **-r** | **--no-random-matrices**: Number of random matrices to create when evaluating clusters.
 - **-y** | **--event-type**: Filter to keep only a single type of event. To choose among SE, A5, A3, MX, RI, AF, AL and all. Default = all.
-- **-f** | **--total-filter**: Minimum mean for all samples of the total expression of the transcripts involved in the event. It will filter out the events that do not reach this total expression value for the transcripts defining the event (the denominator of the PSI calculation). Default = 1. /!\ Not the same as the one in psiPerEvent.
+- **-f** | **--total-filter**: Minimum mean for all samples of the total expression of the transcripts involved in the event. It will filter out the events that do not reach this total expression value for the transcripts defining the event (the denominator of the PSI calculation). Default = 1. /!\ Not the same as the one in psiPerEvent, which is a filter per sample.
 - **-mi** | **--microexon-enrichment**: if option written in command, events will be filtered to keep only micro exons (<= 50 nt). Default = False.
 - **-m** | **--mode**: verbose mode to choose from DEBUG, INFO, WARNING, ERROR and CRITICAL.
 
-**Feature selection** : for a given number of iterations, the last events (number given by arguments) in terms of probability for each cluster will be checked. If some events are in common in all clusters, they will be removed. In figure 2, if we check the 3 least probable events for each cluster in the cluster-event distributions, event 4 is in common for all clusters and will be removed before recalculating the distributions.
+**Feature selection** : for a given number of iterations, the last events in terms of probability for each cluster will be checked (number given by arguments). If some events are in common in all clusters, they will be removed. In figure 2, if we check the 3 least probable events for each cluster in the cluster-event distributions, event 4 is in common for all clusters and will be removed before recalculating the distributions.
 
 
 ### Input files
@@ -86,8 +86,8 @@ An ioe file and a "transcript expression file" are required as input. See SUPPA�
 
 This tool outputs three files:
 - The document-topic (sample-cluster) distribution given by the Latent Dirichlet Allocation model, with sample names as row names, no headers, tab-separated.
-- The topic-term (cluster-event id) distribution given by the Latent Dirichlet Allocation model, with event ids as headers, no row names, tab-separated.
-- A file of the <n> most probable events of every cluster. Clusters preceded by a comment line “#Cluster_&lt;cl-number&gt;: &lt;number-of-main-events&gt;/&lt;total-number-of-events&gt; events needed to overcome a probability of &lt;prob-cutoff&gt;”. On each new line there is an event id separated by a tab from its probability in the cluster.
+- The topic-term (cluster-event id) distribution given by the Latent Dirichlet Allocation model, with event IDs as headers, no row names, tab-separated.
+- A file of the <n> most probable events of every cluster. Clusters preceded by a comment line `#Cluster_<cl-number>: <number-of-main-events>/<total-number-of-events> events needed to overcome a probability of <prob-cutoff>`. On each new line there is an event id separated by a tab from its probability in the cluster.
 
 The name of the output is generated as follows:
 - **&lt;output-file&gt;**.DocTopic.tab
@@ -96,7 +96,7 @@ The name of the output is generated as follows:
 
 #### An example of the first lines of a document-topic distribution output:
 ```
-[Samples Cluster1    Cluster2    Cluster]
+[Samples Cluster1    Cluster2    Cluster3]
 GTEX-XXEK-1126-SM-4BRUX	  3.61907773e-07	  9.99989018e-01	  1.06201762e-05
 GTEX-S32W-1926-SM-4AD63	  4.80354649e-07	  8.50639711e-01	  1.49359809e-01
 GTEX-X4EP-1026-SM-4QAS5	  3.58454581e-07	  9.99999275e-01	  3.66085427e-07
@@ -115,7 +115,7 @@ EventID1  EventID2  EventID3 EventID4   ...
 ```
 The event ids are the same as in SUPPA.
 
-#### An example of top 4 events output for 3 clusters:
+#### An example of top 4 events output for 3 clusters and a 0.8 cutoff to find the number of main events:
 ```
 # Cluster_1: 4001/33359 events needed to overcome a probability of 0.8
 ENSG00000197971.14;SE:chr18:76984894-76988495:76988527-76988877:-	0.0165711348953
@@ -154,7 +154,7 @@ Rscript Plot_DocumentTopic.R -i <document-topic-file> -o <output-plot-name> -f <
 ```
 
 ### Command options
-- **-i** | **--input**: Document-topic distribution file, with row names, without headers
+- **-i** | **--input**: Document-topic distribution file, with row names, without headers.
 - **-o** | **--output**: Name of the output plot. Default = plot.pdf
 - **-f** | **--file**: Tab-separated sample-label file with headers, containing all samples (documents) from the document-topic distribution file.
 
@@ -195,7 +195,9 @@ An example of structure plot
 ## Cluster-event comparison - TopicTerm_Comparison.R
 ----------------------------
 
-### Modules
+Developed with R
+
+### Modules used
 - optparse
 - ggplot2
 - reshape2
@@ -212,7 +214,7 @@ Rscript --vanilla TopicTerm_Comparison.R -i Example.TopicTerm.tab -o Specificity
 ```
 ### Command options  
 - **-i** | **--input**: Topic-term distribution file
-- **-o** | **--output**: Common name of the output plots, that will differ with the extension. Default = plot -> outputs = plot\_cl**&lt;number&gt;**.pdf. **Note** : No extension must be given.
+- **-o** | **--output**: Common name of the output plots, that will differ with the extension. Default = plot -> outputs = plot\_cl **&lt;number&gt;** .pdf. **Note** : No extension must be given.
 - **-t** | **--topEvents**: Number of most probable events to plot (limit of the horizontal line of the plot). Default = all events.
 
 ### Input file
@@ -220,7 +222,7 @@ Rscript --vanilla TopicTerm_Comparison.R -i Example.TopicTerm.tab -o Specificity
 
 
 ### Output files
-Outputs by the name **&lt;output-name&gt;**\_cl**&lt;cluster-number&gt;**.pdf. The cluster number will be automatically generated, only the output name without extension can be given. Each file will have a specificity-probability plot. 
+Outputs by the name **&lt;output-name&gt;**\_cl **&lt;cluster-number&gt;** .pdf. The cluster number will be automatically generated, only the output name without extension can be given. Each file will have a specificity-probability plot. 
 
 The specificity is the log2 ratio of the probability of the cluster against the other clusters (there will be a curve for each of the other clusters), for the events in decreasing order of probability of the cluster.
 There will therefore be as many outputs as clusters (topics).
