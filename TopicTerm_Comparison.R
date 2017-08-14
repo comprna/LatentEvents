@@ -83,26 +83,44 @@ Specificity_probability_graph = function (cl_no, log2_df, decr, n, output_name)
   #Find the log2 probability ratio of cluster cl_no
   idx_log2 <- grep(paste("Cl", cl_no, sep = ""), colnames(log2_df)) #Indexes of the log2 ratio that interest us
   log2_df_cl <- log2_df[,idx_log2]
+  
   #If log2(otherCluster/cl_no) instead of log2(cl_no/otherCluster), invert it
   idx_not_to_invert <- grep(paste("log2_ProbCl", cl_no, sep = ""), colnames(log2_df)[idx_log2])
   if (length(idx_not_to_invert) == 0) #All log2 to invert
   {
     log2_df_cl <- -log2_df_cl
-    colnames(log2_df_cl) <- paste("-", colnames(log2_df_cl), sep="")
+    if (dim(log2_df)[2] == 1) #If only 2 clusters in total
+    {
+      colnames(log2_df) <- paste("-", colnames(log2_df), sep="")
+    } else #More than 2 clusters
+    {
+      colnames(log2_df_cl) <- paste("-", colnames(log2_df_cl), sep="")
+    }
   }
   else if (length(idx_not_to_invert) < length(colnames(log2_df_cl))) #Some log2 to invert
   {
     log2_df_cl[, -idx_not_to_invert] <- -log2_df_cl[, -idx_not_to_invert]
     colnames(log2_df_cl)[-idx_not_to_invert] <- paste("-", colnames(log2_df_cl)[-idx_not_to_invert], sep="")
   }
+  
   #Events in decreasing probability order for cluster no_cl
-  Order_events <- names(decr) 
-  Data <- melt(log2_df_cl[Order_events[1:n],], variable.name="Clusters", value.name = "Log2") #Take only n top events
+  Order_events <- names(decr)
+  if (dim(log2_df)[2] == 1) #If only 2 clusters
+  {
+    Data <- data.frame(cbind(rep(colnames(log2_df), n), log2_df[Order_events[1:n],]))
+    Data[,2] <- as.numeric(levels(Data[,2]))[Data$Log2]
+    colnames(Data) <- c("Clusters", "Log2")
+    EventsRanking <- 1:n
+  } else #more than 2 clusters
+  {
+    Data <- melt(log2_df_cl[Order_events[1:n],], variable.name="Clusters", value.name = "Log2") #Take only n top events
+    EventsRanking <- rep(1:n, (dim(log2_df_cl)[2]))
+  }
+  
   #Graphical representation
-  EventsRanking <- rep(1:n, (dim(log2_df_cl)[2]))
   ggplot(Data, aes(x= EventsRanking, y=Data$Log2, colour = Data$Clusters)) +
     geom_point(alpha = 0.3) + #COMMENT OUT this line if you don't want the dots
-    geom_smooth()+
+    geom_smooth() +
     xlab(paste("Probability ranking of", n, "top events"))+
     ylab(paste("log2(probabilityCl", cl_no,"/probabilityOtherClusters", sep=""))+
     ggtitle(paste("Specificity of events against\nevent probability ranking for cluster", cl_no))
